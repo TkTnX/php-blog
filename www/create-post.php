@@ -1,17 +1,51 @@
 <?php
 require("config.php");
 require("db.php");
+require('functions/all.php');
 
 if (!empty($_POST)) {
 	if (empty($_POST['content']) && empty($_FILES['cover']['name'])) {
 		$errors[] = "Пост должен содержать текст или обложку!";
 	}
 
+
 	if (empty($errors)) {
+
+		// Загрузка cover
+
+		$coverName = null;
+		if (!empty($_FILES['cover']['name'])) {
+
+			$checkResult = checkPhotoBeforeUpload();
+			if (is_array($checkResult)) {
+				$errors = $checkResult;
+			} else {
+				$extention = pathinfo($_FILES['cover']['name'], PATHINFO_EXTENSION);
+
+				if ($extention === "jpeg")
+					$extention = "jpg";
+
+				$sourcePath = $_FILES['cover']['tmp_name'];
+
+				$file_name = uniqid() . '.' . $extention;
+				$result_path = ROOT . 'data/covers/' . $file_name;
+
+				if (resizeAndCropImage($sourcePath, $result_path, 600, 400)) {
+
+					$coverName = $file_name;
+				}
+				;
+
+			}
+		}
+
+		// Создание поста
 		$post = R::dispense('posts');
 		$post->title = trim($_POST['title']);
 		$post->content = trim($_POST['content']);
 		$post->created_at = date('Y-m-d H:i:s');
+		$post->cover_name = $coverName;
+
 
 		$id = R::store($post);
 	}
@@ -42,11 +76,8 @@ include(ROOT . "/templates/header.tpl");
 
 			<fieldset class="fieldset">
 				<div class="label">Обложка</div>
-				<label class="fieldset fieldset--checkbox">
-					<input name="deleteCover" type="checkbox" />
-					Удалить обложку
-				</label>
 				<input name="cover" type="file" />
+				<div class="cover-preview"></div>
 			</fieldset>
 
 			<button type="submit" class="button button--lg">Опубликовать</button>

@@ -13,4 +13,18 @@ define("ROOT", dirname(__FILE__) . "/");
 // Домен сайта
 define("HOST", "http://" . $_SERVER['HTTP_HOST'] . '/');
 
-?>
+
+$allowed_file_types = [
+    "image/jpeg",
+    "image/png",
+    "image/gif"
+];
+
+$allowed_extention = [
+    'jpg',
+    'jpeg',
+    'png',
+    'gif',
+];
+
+$MAX_UPLOAD_COVER_SIZE = 10 * 1024 * 1024;
