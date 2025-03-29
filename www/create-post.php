@@ -76,15 +76,16 @@ include(ROOT . "/templates/header.tpl");
 
 			<fieldset class="fieldset">
 				<div class="label">Обложка</div>
-				<input name="cover" type="file" />
-				<div class="cover-preview"></div>
+				<input name="cover" type="file" id="coverInput" />
+				<div class="cover-preview-wrapper">
+					<img src="" alt="" id="coverPreview">
+				</div>
 			</fieldset>
 
 			<button type="submit" class="button button--lg">Опубликовать</button>
 			<?php if (isset($errors) && !empty($errors)) {
 				foreach ($errors as $error) {
-					echo "<div class='error'>$error</div>"
-					;
+					echo "<div class='error'>$error</div>";
 				}
 			}
 
@@ -96,6 +97,18 @@ include(ROOT . "/templates/header.tpl");
 		</form>
 	</div>
 </main>
+
+<script>
+	const coverInput = document.querySelector('#coverInput');
+	const coverPreview = document.querySelector('#coverPreview');
+
+	coverInput.addEventListener('change', (e) => {
+		const image = e.target.files[0]
+
+		if (image) coverPreview.src = URL.createObjectURL(image);
+
+	})
+</script>
 
 <?php
 

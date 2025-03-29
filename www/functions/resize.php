@@ -52,7 +52,18 @@ function resizeAndCropImage($sourcePath, $destPath, $newWidth, $newHeight)
     }
 
     // Обрезаем и ресайзим
-    imagecopyresampled($resizedImage, $sourceImage, 0, 0, round($srcX), round($srcY), $newWidth, $newHeight, $cropWidth, $cropHeight);
+    imagecopyresampled(
+        $resizedImage,
+        $sourceImage,
+        0,
+        0,
+        round($srcX),
+        round($srcY),
+        round($newWidth),
+        round($newHeight),
+        round($cropWidth),
+        round($cropHeight)
+    );
 
     // Сохранение
     switch ($mime) {
