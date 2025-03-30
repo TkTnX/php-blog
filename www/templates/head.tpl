@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8" />
@@ -12,4 +12,5 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<?= HOST ?>assets/img/favicons/apple-touch-icon.png" />
 </head>
 
-<body class="">
+<body class="<?php if (isset($_COOKIE['theme']) && $_COOKIE['theme'] === "dark")
+    echo ("dark") ?>">

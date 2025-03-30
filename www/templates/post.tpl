@@ -29,13 +29,14 @@
 
     <!-- READ MORE -->
 
-    <?php if (mb_strlen($post['content'], 'UTF-8') > 300): ?>
+    <?php if (mb_strlen($post['content'], 'UTF-8') > 200): ?>
         <div class="post__readmore">
             <a href="post.php?id=<?= $post['id'] ?>" class="link">Читать далее</a>
         </div>
     <?php endif ?>
     <div class="post__buttons">
-        <a href="edit-post.php" class="button button--secondary">Редактировать</a>
-        <a href="delete-post.php" class="button button--secondary">Удалить</a>
+        <a href="edit-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Редактировать</a>
+        <a href="delete-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Удалить</a>
+
     </div>
 </article>

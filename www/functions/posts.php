@@ -13,3 +13,14 @@ function getPost($id)
 
     return $posts;
 }
+
+function deletePost($id)
+{
+    $post = R::findOne('posts', "id = ?", [$id]);
+    if (empty($post)) {
+        return false;
+    } else {
+        R::trash($post);
+        return true;
+    }
+}
