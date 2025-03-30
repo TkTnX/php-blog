@@ -64,11 +64,10 @@ if (isset($_POST['edit-post'])) {
 			}
 		}
 
-		// Создание поста
 		$post->title = trim($_POST['title']);
 		$post->content = trim($_POST['content']);
 		$post->cover_name = $coverName;
-
+		$post->updated_at = date('Y-m-d H:i:s');
 
 		$id = R::store($post);
 	}

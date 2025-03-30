@@ -61,6 +61,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 					<img src="<?= HOST ?>assets/img/svgicons/eye.svg" alt="eye">
 					<?= $post['views'] ?> Просмотров
 				</div>
+				<?php if (isset($post['updated_at'])): ?>
+					<div class="post__date">Updated at: <?php echo date('d.m.Y:h:i', strtotime($post["updated_at"])) ?>
+					</div>
+
+
+				<?php endif; ?>
 			</article>
 		</div>
 	</div>

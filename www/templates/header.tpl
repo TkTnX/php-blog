@@ -3,7 +3,6 @@ $theme = isset($_COOKIE['theme']) ? $_COOKIE['theme'] : null;
 if (isset($_POST['logout'])) {
     logout();
 }
-
 ?>
 
 <header class="header">
