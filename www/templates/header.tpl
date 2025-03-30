@@ -1,6 +1,8 @@
 <?php
-$theme = $_COOKIE['theme'];
-
+$theme = isset($_COOKIE['theme']) ? $_COOKIE['theme'] : null;
+if (isset($_POST['logout'])) {
+    logout();
+}
 
 ?>
 
@@ -13,8 +15,18 @@ $theme = $_COOKIE['theme'];
                 </div>
             </div>
             <div class="header__btns">
-                <a href="create-post.php" class="button">Добавить пост</a>
-                <a href="login.php" class="button">Вход</a>
+                <?php if (is_admin()): ?>
+                    <a href="create-post.php" class="button">Добавить пост</a>
+                <?php endif; ?>
+
+                <?php if (!is_auth()): ?>
+                    <a href="login.php" class="button">Вход</a>
+                <?php else: ?>
+                    <form class="logout-form" method="post">
+                        <button type="submit" name="logout" class="button">Выход</button>
+                    </form>
+                <?php endif; ?>
+
                 <?php if (isset($theme) && $theme === "dark"): ?>
                     <a href="<?= HOST ?>index.php?theme=light" class="button toggleDarkModeBtn">🌞</a>
                 <?php else: ?>
@@ -32,8 +44,17 @@ $theme = $_COOKIE['theme'];
 </header>
 
 <div class="mobile-nav">
-    <a href="create-post.php" class="button">Добавить пост</a>
-    <a href="login.php" class="button">Вход</a>
+    <?php if (is_admin()): ?>
+        <a href="create-post.php" class="button">Добавить пост</a>
+    <?php endif; ?>
+
+    <?php if (!is_auth()): ?>
+        <a href="login.php" class="button">Вход</a>
+    <?php else: ?>
+        <form method="post">
+            <button type="submit" name="logout" class="button">Выход</button>
+        </form>
+    <?php endif; ?>
     <?php if (isset($theme) && $theme === "dark"): ?>
         <a href="<?= HOST ?>index.php?theme=light" class="button toggleDarkModeBtn">🌞</a>
     <?php else: ?>

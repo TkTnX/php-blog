@@ -6,6 +6,11 @@ require("functions/all.php");
 include(ROOT . "/templates/head.tpl");
 include(ROOT . "/templates/header.tpl");
 
+if (!is_admin()) {
+	echo "<script> location.href='" . HOST . "login.php'; </script>";
+	exit;
+}
+
 if (isset($_POST['delete-post'])) {
 	deletePost($_GET['id']);
 	echo "<script> location.href='" . HOST . "'; </script>";

@@ -51,9 +51,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 				<div class="post__readmore">
 					<a href="index.php" class="link">На&#160;главную</a>
 				</div>
-				<div class="post__buttons">
-					<a href="edit-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Редактировать</a>
-					<a href="delete-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Удалить</a>
+				<?php if (is_admin()): ?>
+					<div class="post__buttons">
+						<a href="edit-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Редактировать</a>
+						<a href="delete-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Удалить</a>
+					</div>
+				<?php endif; ?>
+				<div class="post__views">
+					<img src="<?= HOST ?>assets/img/svgicons/eye.svg" alt="eye">
+					<?= $post['views'] ?> Просмотров
 				</div>
 			</article>
 		</div>

@@ -28,3 +28,5 @@ $allowed_extention = [
 ];
 
 $MAX_UPLOAD_COVER_SIZE = 10 * 1024 * 1024;
+
+session_start();

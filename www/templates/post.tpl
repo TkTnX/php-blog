@@ -19,7 +19,6 @@
     <!-- CONTENT -->
 
     <?php if (!empty($post["content"])): ?>
-
         <div class="post__text">
             <p>
                 <?php echo getExcerpt($post["content"]); ?>
@@ -29,14 +28,18 @@
 
     <!-- READ MORE -->
 
-    <?php if (mb_strlen($post['content'], 'UTF-8') > 200): ?>
-        <div class="post__readmore">
-            <a href="post.php?id=<?= $post['id'] ?>" class="link">Читать далее</a>
-        </div>
-    <?php endif ?>
-    <div class="post__buttons">
-        <a href="edit-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Редактировать</a>
-        <a href="delete-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Удалить</a>
-
+    <div class="post__readmore">
+        <a href="post.php?id=<?= $post['id'] ?>" class="link">Узнать больше</a>
     </div>
+    <?php if (is_admin()): ?>
+        <div class="post__buttons">
+            <a href="edit-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Редактировать</a>
+            <a href="delete-post.php?id=<?= $post['id'] ?>" class="button button--secondary">Удалить</a>
+        </div>
+    <?php endif; ?>
+    <div class="post__views">
+        <img src="<?= HOST ?>assets/img/svgicons/eye.svg" alt="eye">
+        <?= $post['views'] ?>
+    </div>
+
 </article>

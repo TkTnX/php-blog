@@ -3,6 +3,11 @@ require("config.php");
 require("db.php");
 require('functions/all.php');
 
+if (!is_admin()) {
+	echo "<script> location.href='" . HOST . "login.php'; </script>";
+	exit;
+}
+
 if (!empty($_POST)) {
 	if (empty($_POST['content']) && empty($_FILES['cover']['name'])) {
 		$errors[] = "Пост должен содержать текст или обложку!";

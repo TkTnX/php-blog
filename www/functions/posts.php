@@ -9,9 +9,10 @@ function getPosts()
 
 function getPost($id)
 {
-    $posts = R::findOne('posts', "id = ?", [$id]);
-
-    return $posts;
+    $post = R::findOne('posts', "id = ?", [$id]);
+    $post->views = $post->views + 1;
+    R::store($post);
+    return $post;
 }
 
 function deletePost($id)

@@ -6,16 +6,21 @@ require("functions/all.php");
 include(ROOT . "/templates/head.tpl");
 include(ROOT . "/templates/header.tpl");
 
+if (!is_admin()) {
+	echo "<script> location.href='" . HOST . "login.php'; </script>";
+	exit;
+}
+
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 	$post = getPost($_GET['id']);
 
 	if (empty($post)) {
-		header('Location: ' . HOST);
+		echo "<script> location.href='" . HOST . "'; </script>";
 		exit;
 	}
 
 } else {
-	header('Location: ' . HOST);
+	echo "<script> location.href='" . HOST . "'; </script>";
 	exit;
 }
 
@@ -102,16 +107,39 @@ if (isset($_POST['edit-post'])) {
 						Удалить обложку
 					</label>
 				<?php endif; ?>
-				<input name="cover" type="file" />
+				<input id="cover" name="cover" type="file" />
+				<img src="" class="" id="coverPreview" alt="">
 			</fieldset>
 
 			<div class="form__btns-wrapper">
 				<button name="edit-post" class="button button--lg">Обновить</button>
 				<a href="<?= HOST ?>" class="button button--secondary button--lg">Отмена</a>
 			</div>
+
+			<?php if (isset($errors) && !empty($errors)) {
+				foreach ($errors as $error) {
+					echo "<div class='error'>$error</div>";
+				}
+			}
+
+			if (isset($id)) {
+				echo "<div class='success'>Post updated {$id}</div>";
+			}
+
+			?>
 		</form>
 	</div>
 </main>
+
+<script>
+	const preview = document.querySelector('#coverPreview');
+	const coverInput = document.querySelector('#cover');
+
+	coverInput.addEventListener('change', (e) => {
+		preview.src = URL.createObjectURL(e.target.files[0]);
+	})
+
+</script>
 
 <?php
 

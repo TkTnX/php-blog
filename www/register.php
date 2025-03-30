@@ -14,18 +14,16 @@ if (!empty($_POST)) {
 	if (empty($errors)) {
 		$user = R::findOne('users', "username = ?", [$_POST['username']]);
 		if (empty($user)) {
-			$errors[] = "Введены неверные данные!";
+			$user = R::dispense('users');
+			$user->username = $_POST['username'];
+			$user->password = $_POST['password'];
+			$user->role = "user";
+			R::store($user);
+			echo "<script> location.href='" . HOST . "login.php'; </script>";
+			exit;
 		} else {
-			if ($user->password == $_POST['password']) {
+			$errors[] = "Пользователь с таким именем уже существует!";
 
-				$_SESSION['role'] = $user['role'];
-				$_SESSION['username'] = $user['username'];
-
-				echo "<script> location.href='" . HOST . "'; </script>";
-				exit;
-			} else {
-				$errors[] = "Введены неверные данные!";
-			}
 		}
 	}
 
@@ -38,7 +36,7 @@ if (!empty($_POST)) {
 <main class="page-content">
 	<div class="container container-narrow">
 		<form method="post" class="form">
-			<h2 class="form__title">Вход</h2>
+			<h2 class="form__title">Регистрация</h2>
 
 			<label class="fieldset">
 				<div class="label">Username</div>
@@ -50,14 +48,14 @@ if (!empty($_POST)) {
 				<input name="password" type="password" class="input" />
 			</label>
 
-			<button class="button button--lg">Войти</button>
+			<button class="button button--lg">Зарегистрироваться</button>
 			<?php if (isset($errors) && !empty($errors)) {
 				foreach ($errors as $error) {
 					echo "<div class='error'>$error</div>";
 				}
 			}
 			?>
-			<a href="register.php" class="link">Ещё нет аккаунта?</a>
+			<a href="login.php" class="link">Уже есть аккаунт?</a>
 		</form>
 	</div>
 </main>
